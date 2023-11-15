@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd"
+        objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS">
+
+    <changeSet id="2023-15-11-06-spectator-alter" author="Cujba Victor">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="spectator"/>
+        </preConditions>
+
+        <addColumn tableName="spectator">
+            <column name="id_room" type="BIGINT(20)"/>
+        </addColumn>
+
+        <addForeignKeyConstraint baseTableName="spectator" baseColumnNames="id_room"
+                                 constraintName="FK_SPECTATOR_ON_ROOM" referencedTableName="room"
+                                 referencedColumnNames="id"/>
+        <rollback>
+            <dropColumn tableName="spectator" columnName="id_room"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>
