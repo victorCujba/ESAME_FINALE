@@ -1,6 +1,8 @@
 package it.euris.progettocinema.demo.data.dto;
 
 import it.euris.progettocinema.demo.data.archetype.Dto;
+import it.euris.progettocinema.demo.data.model.Movie;
+import it.euris.progettocinema.demo.data.model.Room;
 import it.euris.progettocinema.demo.data.model.Spectator;
 import it.euris.progettocinema.demo.data.model.Ticket;
 import lombok.AllArgsConstructor;
@@ -21,6 +23,7 @@ public class TicketDTO implements Dto {
     private String position;
     private String price;
     private String idSpectator;
+    private String idMovie;
 
     @Override
     public Ticket toModel() {
@@ -28,9 +31,9 @@ public class TicketDTO implements Dto {
                 .position(position)
                 .price(stringToInteger(price))
                 .spectator(Spectator.builder().idSpectator(stringToLong(idSpectator)).build())
+                .movie(Movie.builder().id(stringToLong(idMovie)).build())
                 .build();
     }
-
 
 
 }

@@ -10,6 +10,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static it.euris.progettocinema.demo.utility.DataConversionUtils.numberToString;
@@ -33,7 +34,7 @@ public class Room implements Model {
     @Column
     private Integer capacity;
 
-    @OneToMany(mappedBy = "room", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "room", cascade = CascadeType.ALL)
     private List<Spectator> spectatorList;
 
     @ManyToOne
@@ -45,17 +46,30 @@ public class Room implements Model {
     private Cinema cinema;
 
 
+
     @Override
     public RoomDTO toDto() {
 
-        List<SpectatorDTO> spectatorDTOList = spectatorList.stream()
-                .map(Spectator::toDto).toList();
+//        List<SpectatorDTO> spectatorDTOList = spectatorList.stream()
+//                .map(Spectator::toDto).toList();
+        List<String> idStringSpectators = new ArrayList<>();
+        if (spectatorList == null) {
+            idStringSpectators = null;
+        } else {
+
+            List<Long> idLongRoom = spectatorList.stream()
+                    .map(Spectator::getIdSpectator).toList();
+            for (Long id : idLongRoom) {
+                idStringSpectators.add(id.toString());
+            }
+        }
+
 
         return RoomDTO.builder()
                 .id(numberToString(id))
                 .name(name)
                 .capacity(numberToString(capacity))
-                .spectatorDTOList(spectatorDTOList)
+                .idSpectators(idStringSpectators)
                 .idMovie(numberToString(movie.getId()))
                 .idCinema(numberToString(cinema.getId()))
                 .build();

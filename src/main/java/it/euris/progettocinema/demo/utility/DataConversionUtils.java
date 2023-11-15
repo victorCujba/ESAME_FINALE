@@ -19,7 +19,7 @@ public class DataConversionUtils {
     }
 
     public static LocalDateTime stringToLocalDateTime(String value) {
-        return value == null ? null : LocalDateTime.parse(value.substring(0, 19));
+        return value == null ? null : LocalDateTime.parse(value.substring(0,19));
     }
 
     public static String localDateTimeToString(LocalDateTime value) {

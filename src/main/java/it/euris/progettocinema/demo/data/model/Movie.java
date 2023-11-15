@@ -2,7 +2,6 @@ package it.euris.progettocinema.demo.data.model;
 
 import it.euris.progettocinema.demo.data.archetype.Model;
 import it.euris.progettocinema.demo.data.dto.MovieDTO;
-import it.euris.progettocinema.demo.data.enums.MovieType;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -44,6 +43,9 @@ public class Movie implements Model {
 
     @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL)
     private List<Room> rooms;
+
+    @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL)
+    private List<Ticket> ticketList;
 
 
     @Override

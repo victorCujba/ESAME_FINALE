@@ -30,9 +30,13 @@ public class Ticket implements Model {
     @Column(name = "price")
     private Integer price;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_spectator")
     private Spectator spectator;
+
+    @ManyToOne
+    @JoinColumn(name = "id_movie")
+    private Movie movie;
 
     @Override
     public TicketDTO toDto() {

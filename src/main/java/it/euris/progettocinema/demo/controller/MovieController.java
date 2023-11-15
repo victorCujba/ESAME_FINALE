@@ -2,6 +2,7 @@ package it.euris.progettocinema.demo.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import it.euris.progettocinema.demo.data.dto.MovieDTO;
+import it.euris.progettocinema.demo.data.enums.MovieType;
 import it.euris.progettocinema.demo.data.model.Movie;
 import it.euris.progettocinema.demo.exceptions.IdMustNotBeNullException;
 import it.euris.progettocinema.demo.service.MovieService;
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+
+import static it.euris.progettocinema.demo.utility.DataConversionUtils.movieTypeToString;
 
 @AllArgsConstructor
 @RestController
@@ -31,8 +34,10 @@ public class MovieController {
     @Operation(description = """
             This method is used to save a new Movie to data base.
             """)
-    public MovieDTO insertMovie(@RequestBody MovieDTO movieDTO) {
+    public MovieDTO insertMovie(@RequestBody MovieDTO movieDTO, @RequestParam MovieType type) {
         Movie movie = movieDTO.toModel();
+        movie.setType(movieTypeToString(type));
+        movie.setType(movieTypeToString(type));
         return movieService.insert(movie).toDto();
     }
 

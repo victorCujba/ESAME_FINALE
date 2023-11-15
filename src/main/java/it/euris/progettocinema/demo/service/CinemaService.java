@@ -16,4 +16,6 @@ public interface CinemaService {
 
     Cinema findById(Long id);
 
+    Integer getAllIncome();
+
 }

@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -38,21 +39,34 @@ public class Spectator implements Model {
     @Column(name = "date_od_birth")
     private LocalDateTime dateOfBirth;
 
-    @OneToMany(mappedBy = "spectator", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "spectator", cascade = CascadeType.MERGE)
     private List<Ticket> ticketList;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_room")
     private Room room;
 
 
     @Override
     public SpectatorDTO toDto() {
+        List<String> idStringTickets = new ArrayList<>();
+        if (ticketList == null) {
+            idStringTickets = null;
+        } else {
+
+            List<Long> idLongRoom = ticketList.stream()
+                    .map(Ticket::getId).toList();
+            for (Long id : idLongRoom) {
+                idStringTickets.add(id.toString());
+            }
+        }
+
+
         return SpectatorDTO.builder()
                 .firstName(firstName)
                 .lastName(lastName)
                 .dateOfBirth(localDateTimeToString(dateOfBirth))
-                .idRoom(numberToString(room.getId()))
+                .idTickets(idStringTickets)
                 .build();
     }
 

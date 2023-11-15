@@ -10,6 +10,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static it.euris.progettocinema.demo.utility.DataConversionUtils.stringToInteger;
@@ -24,15 +25,23 @@ public class RoomDTO implements Dto {
     private String id;
     private String name;
     private String capacity;
-    private List<SpectatorDTO> spectatorDTOList;
+    private List<String> idSpectators;
     private String idMovie;
     private String idCinema;
 
     @Override
     public Room toModel() {
-        List<Spectator> spectatorList = spectatorDTOList.stream()
-                .map(SpectatorDTO::toModel).toList();
+//        List<Spectator> spectatorList = spectatorDTOList.stream()
+//                .map(SpectatorDTO::toModel).toList();
+        List<Spectator> spectatorList = new ArrayList<>();
+        if (idSpectators == null) {
+            spectatorList = new ArrayList<>();
 
+        } else {
+            for (String idSpc : idSpectators) {
+                spectatorList.add(Spectator.builder().idSpectator(stringToLong(idSpc)).build());
+            }
+        }
         return Room.builder()
                 .name(name)
                 .capacity(stringToInteger(capacity))
@@ -40,5 +49,9 @@ public class RoomDTO implements Dto {
                 .movie(Movie.builder().id(stringToLong(idMovie)).build())
                 .cinema(Cinema.builder().id(stringToLong(idCinema)).build())
                 .build();
+    }
+
+    public void emptyRoom() {
+        setIdSpectators(new ArrayList<>());
     }
 }
