@@ -19,7 +19,7 @@
             </column>
             <column name="first_name" type="VARCHAR(255)"/>
             <column name="last_name" type="VARCHAR(255)"/>
-            <column name="date_od_birth" type="TIMESTAMP"/>
+            <column name="date_od_birth" type="DATETIME"/>
         </createTable>
         <rollback>
             <dropTable tableName="spectator"/>
