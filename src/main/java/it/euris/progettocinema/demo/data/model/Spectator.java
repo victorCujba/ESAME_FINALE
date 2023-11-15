@@ -63,6 +63,7 @@ public class Spectator implements Model {
 
 
         return SpectatorDTO.builder()
+                .id(numberToString(idSpectator))
                 .firstName(firstName)
                 .lastName(lastName)
                 .dateOfBirth(localDateTimeToString(dateOfBirth))
