@@ -44,4 +44,9 @@ public class CinemaServiceImpl implements CinemaService {
     public Cinema findById(Long id) {
         return cinemaRepository.findById(id).orElse(Cinema.builder().build());
     }
+
+    @Override
+    public Integer getAllIncome() {
+        return null;
+    }
 }
